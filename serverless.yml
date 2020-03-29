@@ -1,0 +1,46 @@
+service: sls-az-func-rest-api
+provider:
+  name: azure
+  region: West US 2
+  runtime: nodejs10.x
+  environment:
+    VARIABLE_FOO: foo
+plugins:
+  - serverless-azure-functions
+package:
+  exclude:
+    - local.settings.json
+    - .vscode/**
+functions:
+  issues:
+    handler: src/handlers/issues.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel: anonymous
+    name: sls-az-func-rest-api-dev-issues
+  pulls:
+    handler: src/handlers/pulls.handler
+    events:
+      - http: true
+        x-azure-settings:
+          authLevel: anonymous
+    name: sls-az-func-rest-api-dev-pulls
+  main:
+    handler: src/handlers/main.handler
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: sls-az-func-rest-api-dev-main
+  goodbye:
+    handler: src/handlers/goodbye.sayGoodbye
+    events:
+      - http: true
+        x-azure-settings:
+          methods:
+            - GET
+          authLevel: anonymous
+    name: sls-az-func-rest-api-dev-goodbye
