@@ -39,7 +39,9 @@ module.exports.handler = function(context) {
     Object.assign(_model.profile, profileFields)
     context.res = {
       status: 200,
-      body: _model
+      body: {
+        data: _model
+      }
     };
     context.done()
   })
