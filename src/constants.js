@@ -1,0 +1,1 @@
+module.exports.TABLE_DB = 'portfolio';

@@ -1,3 +1,24 @@
+const storage = require('azure-storage');
+
+/**
+ * Get the azure storage
+ *
+ * @return {object} return hash of storage and storage client
+ */
+module.exports.getAzStorage = () => {
+  const protocol = 'https';
+  const accountName = 'portfolio-db';
+  const table = 'https://portfolio-db.table.cosmos.azure.com:443/';
+  const accountKey = 'eXeZt0qrvSEnAZgKxBzBaaFcZZtlo9hr4DEFQH6dW3HWxtgunYfXUONtsLrthnH0OfF85EACQkVY2wQQphZtuA==';
+  const connectionString = `DefaultEndpointsProtocol=${protocol};AccountName=${accountName};AccountKey=${accountKey};TableEndpoint=${table};`;
+  const storageClient = storage.createTableService(connectionString);
+
+  return {
+    storage,
+    storageClient
+  }
+};
+
 /** 
  * Gets the param from either the query string
  * or body of request
