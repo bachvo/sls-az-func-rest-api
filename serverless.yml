@@ -71,12 +71,3 @@ functions:
             - GET
           authLevel: anonymous
     name: sls-az-func-rest-api-dev-contact-info
-  keep-warm:
-    handler: src/handlers/keep-warm.handler
-    events:
-      - http: true
-        x-azure-settings:
-          methods:
-            - GET
-          authLevel: anonymous
-    name: sls-az-func-rest-api-dev-keep-warm
