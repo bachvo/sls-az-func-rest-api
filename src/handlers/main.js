@@ -20,7 +20,7 @@ module.exports.handler = async function(context) {
   const queryProfile = new storage.TableQuery().where('PartitionKey eq ?', PROFILE_PARTITION_KEY);
   const queryIntro = new storage.TableQuery().where('PartitionKey eq ?', INTRO_PARTITION_KEY);
   const queryProjects = new storage.TableQuery().where('PartitionKey eq ?', PROJECTS_PARTITION_KEY);
-  const queryWorkExp = new storage.TableQuery().where('PartitionKey eq ?', WORKEXP_PARTITION_KEY).and('RowKey eq ?', 'work');
+  const queryWorkExp = new storage.TableQuery().where('PartitionKey eq ?', WORKEXP_PARTITION_KEY);
 
   const emailQuery = new storage.TableQuery().where('PartitionKey eq ?', CONTACTINFO_PARTITION_KEY).and('RowKey eq ?', 'email');
   const phoneQuery = new storage.TableQuery().where('PartitionKey eq ?', CONTACTINFO_PARTITION_KEY).and('RowKey eq ?', 'phone');
@@ -78,14 +78,14 @@ module.exports.handler = async function(context) {
 
   await Promise.all(promiseAll).then(data => {
     const _data = utils.createResultsHash(data);
-    const workExpCards = _data[WORKEXP_CARD_ROW_KEY].map((card, index) => {
-      card.gallery = [];
-      card.skills = [];
+    const workExpCards = _data[WORKEXP_CARD_ROW_KEY].map((card) => {
+      const galleryArray = JSON.parse(card.gallery);
+      card.gallery = galleryArray;
       return card;
     });
-    const projectCards = _data[PROJECTS_CARD_ROW_KEY].map((card, index) => {
-      card.gallery = [];
-      card.skills = [];
+    const projectCards = _data[PROJECTS_CARD_ROW_KEY].map((card) => {
+      const galleryArray = JSON.parse(card.gallery);
+      card.gallery = galleryArray;
       return card;
     });
     _data.workExp.cards = workExpCards;
