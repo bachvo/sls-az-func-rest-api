@@ -78,8 +78,20 @@ module.exports.handler = async function(context) {
 
   await Promise.all(promiseAll).then(data => {
     const _data = utils.createResultsHash(data);
-    _data.workExp.cards = _data[WORKEXP_CARD_ROW_KEY];
-    _data.projects.cards = _data[PROJECTS_CARD_ROW_KEY];
+    const workExpCards = _data[WORKEXP_CARD_ROW_KEY].map((card, index) => {
+      card.gallery = [];
+      card.skills = [];
+      card.galleryId = index + 1;
+      return card;
+    });
+    const projectCards = _data[PROJECTS_CARD_ROW_KEY].map((card, index) => {
+      card.gallery = [];
+      card.skills = [];
+      card.galleryId = index + 1;
+      return card;
+    });
+    _data.workExp.cards = workExpCards;
+    _data.projects.cards = projectCards;
 
     delete _data[WORKEXP_CARD_ROW_KEY];
     delete _data[PROJECTS_CARD_ROW_KEY];;
