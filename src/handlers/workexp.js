@@ -21,7 +21,7 @@ module.exports.fetch = async function() {
     cardsPromiseAll,
   ];
 
-  return await Promise.all(promiseAll).then(data => {
+  return Promise.all(promiseAll).then(data => {
     const _data = utils.createResultsHash(data);
     const workExpCards = _data[ROW_KEY].map((card) => {
       const galleryArray = JSON.parse(card.gallery);
