@@ -1,7 +1,7 @@
 const utils = require("../utils");
 const constants = require("../constants");
 
-module.exports.handler = async function(context) {
+module.exports.fetch = async function() {
   const { storage, storageClient } = utils.getAzStorage();
   const PARTITION_KEY = 'contactInfo';
 
@@ -15,12 +15,5 @@ module.exports.handler = async function(context) {
   const githubPromise = utils.promisfyQueryEntities(storageClient, constants.TABLE_DB, githubQuery);
 
   const promises = [emailPromise, phonePromise, linkedinPromise, githubPromise];
-  const resolvedPromises = await Promise.all(promises);
-
-  context.res = {
-    status: 200,
-    body: {
-      data: resolvedPromises,
-    }
-  };
+  return Promise.all(promises).then(data => ({ [PARTITION_KEY]: data }));
 };

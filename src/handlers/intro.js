@@ -1,17 +1,10 @@
 const utils = require("../utils");
 const constants = require("../constants");
 
-module.exports.handler = async function(context) {
+module.exports.fetch = async function() {
   const { storage, storageClient } = utils.getAzStorage();
   const PARTITION_KEY = 'intro';
 
   const query = new storage.TableQuery().where('PartitionKey eq ?', PARTITION_KEY);
-  const data = await utils.promisfyQueryEntities(storageClient, constants.TABLE_DB, query);
-
-  context.res = {
-    status: 200,
-    body: {
-      data,
-    }
-  };
+  return utils.promisfyQueryEntities(storageClient, constants.TABLE_DB, query).then(data => ({ [PARTITION_KEY]: data }));
 };

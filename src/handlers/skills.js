@@ -1,7 +1,7 @@
 const utils = require("../utils");
 const constants = require("../constants");
 
-module.exports.handler = async function(context) {
+module.exports.fetch = async function() {
   const { storage, storageClient } = utils.getAzStorage();
   const PARTITION_KEY = 'skills';
 
@@ -13,12 +13,5 @@ module.exports.handler = async function(context) {
   const skillsDevPromise = utils.promisfyQueryEntities(storageClient, constants.TABLE_DB, skillsDevQuery);
 
   const promises = [skillsUIPromise, skillsUXPromise, skillsDevPromise];
-  const resolvedPromises = await Promise.all(promises);
-
-  context.res = {
-    status: 200,
-    body: {
-      data: resolvedPromises,
-    }
-  };
+  return Promise.all(promises).then(data => ({ [PARTITION_KEY]: data }));
 };

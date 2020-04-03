@@ -35,39 +35,12 @@ functions:
             - GET
           authLevel: anonymous
     name: sls-az-func-rest-api-dev-main
-  intro:
-    handler: src/handlers/intro.handler
+  main-lite:
+    handler: src/handlers/main-lite.handler
     events:
       - http: true
         x-azure-settings:
           methods:
             - GET
           authLevel: anonymous
-    name: sls-az-func-rest-api-dev-intro
-  profile:
-    handler: src/handlers/profile.handler
-    events:
-      - http: true
-        x-azure-settings:
-          methods:
-            - GET
-          authLevel: anonymous
-    name: sls-az-func-rest-api-dev-profile
-  skills:
-    handler: src/handlers/skills.handler
-    events:
-      - http: true
-        x-azure-settings:
-          methods:
-            - GET
-          authLevel: anonymous
-    name: sls-az-func-rest-api-dev-skills
-  contact-info:
-    handler: src/handlers/contact-info.handler
-    events:
-      - http: true
-        x-azure-settings:
-          methods:
-            - GET
-          authLevel: anonymous
-    name: sls-az-func-rest-api-dev-contact-info
+    name: sls-az-func-rest-api-dev-main-lite
